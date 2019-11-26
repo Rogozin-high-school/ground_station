@@ -1,3 +1,4 @@
+python3 << END
 import os
 import json
 import subprocess
@@ -38,3 +39,4 @@ data = {
 
 with open(".vscode/settings.json", "w") as write_file:
     json.dump(data, write_file, indent=4)
+END
