@@ -11,7 +11,8 @@ data = {
         {
             "name": "Linux",
             "includePath": [
-                "include"
+                "include",
+                "lib"
             ]
         }
     ],
@@ -34,7 +35,8 @@ data = {
         "res": True,
         "*.sh": True,
         "*.py": True
-    }
+    },
+    "editor.minimap.enabled": False
 }
 
 with open(".vscode/settings.json", "w") as write_file:
