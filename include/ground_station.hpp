@@ -1,13 +1,8 @@
 #pragma once
-#include <graphics.hpp>
-#include <gtkmm/application.h>
 
 class GroundStation {
 public:
-    GroundStation();
+    bool isConnected = false;
 
-    int run(Graphics& graphics);
-    void quit();
-private:
-    Glib::RefPtr<Gtk::Application> application;
+    GroundStation();
 };

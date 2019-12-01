@@ -1,6 +1,5 @@
 g++ \
     -Iinclude \
-    -Ilib \
     src/*.cpp \
     bin/res.o \
     `pkg-config gtkmm-3.0 --cflags --libs` \

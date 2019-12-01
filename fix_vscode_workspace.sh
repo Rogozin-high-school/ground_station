@@ -11,8 +11,7 @@ data = {
         {
             "name": "Linux",
             "includePath": [
-                "include",
-                "lib"
+                "include"
             ]
         }
     ],
@@ -20,7 +19,7 @@ data = {
 }
 
 output = subprocess.run(["pkg-config","--cflags", "gtkmm-3.0"], stdout = subprocess.PIPE, universal_newlines = True).stdout
-gtk_include_path = ("/" + str for str in output.split(" -I/")[1:])
+gtk_include_path = ("/" + s for s in output.split(" -I/")[1:])
 data["configurations"][0]["includePath"].extend(gtk_include_path)
 
 with open(".vscode/c_cpp_properties.json", "w") as write_file:
@@ -32,7 +31,6 @@ data = {
         ".gitignore": True,
         "*.md": True,
         "bin": True,
-        "res": True,
         "*.sh": True,
         "*.py": True
     },
