@@ -1,5 +1,5 @@
 #include <graphics.hpp>
-#include <window.hpp>
+#include <windows.hpp>
 #include <gdkmm/screen.h>
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/stylecontext.h>

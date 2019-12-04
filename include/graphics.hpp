@@ -4,11 +4,11 @@
 
 class Graphics {
 public:
+    int width, height;
     Graphics(GroundStation& groundStation);
 
     void quit();
 private:
-    int width, height;
     GroundStation& groundStation;
 
     Glib::RefPtr<Gtk::Application> application;
