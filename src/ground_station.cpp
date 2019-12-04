@@ -3,3 +3,7 @@
 GroundStation::GroundStation() {
     
 }
+
+void GroundStation::quit() {
+    
+}
