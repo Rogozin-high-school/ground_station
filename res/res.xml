@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource>
-    <file>icon.png</file>
+    <file>ground_station.png</file>
+    <file>satellite.png</file>
+    <file>rogozin.png</file>
+    <file>presentation.png</file>
     <file>style.css</file>
   </gresource>
 </gresources>

@@ -1,9 +1,9 @@
 #include <ground_station.hpp>
 
-GroundStation::GroundStation() {
-    
+GroundStation::GroundStation()
+{
 }
 
-void GroundStation::quit() {
-    
+void GroundStation::quit()
+{
 }

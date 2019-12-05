@@ -1,8 +1,43 @@
 window {
-    background-color: #202020;
+    background: #202020;
 }
 
-expander {
-    background: #333333;
-    color: white;
+#title_bar {
+    font: 36px "Ubuntu";
+    font-weight: bold;
+    color: darkcyan;
+    background: #303030;
+}
+
+#title_bar_inner {
+    margin: 8px;
+}
+
+label#title_bar_inner {
+    margin-left: 8px;
+}
+
+#side_bar {
+    font: 32px "Ubuntu";
+    color: gray;
+    background: #353535; 
+}
+
+button#side_bar_node {
+    border: 0;
+    text-shadow: none;
+    color: whitesmoke;
+    background: #404040;
+}
+
+button:checked#side_bar_node {
+    background: #505050;
+}
+
+box#side_bar_node {
+    margin: 8px;
+}
+
+label#side_bar_node {
+    margin-left: 16px;
 }
