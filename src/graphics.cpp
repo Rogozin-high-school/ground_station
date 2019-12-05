@@ -46,7 +46,7 @@ Window::Window(Graphics *pGraphics) : graphics(*pGraphics)
             static Gtk::Box titleBarInner;
             titleBarInner.set_name("title_bar_inner");
             {
-                static Gtk::Image icon(pIconRogozin->scale_simple(64, 64, Gdk::INTERP_BILINEAR));
+                static Gtk::Image icon(pIconRogozin->scale_simple(128, 128, Gdk::INTERP_BILINEAR));
                 static Gtk::Label label("Rogozin's Ground Station");
                 icon.set_name("title_bar_inner");
                 label.set_name("title_bar_inner");
@@ -58,44 +58,26 @@ Window::Window(Graphics *pGraphics) : graphics(*pGraphics)
         layout.pack_start(titleBar, Gtk::PACK_SHRINK);
     }
     {
-        int glAreaSize = height - 64 * 2;
-        int x1 = (width - glAreaSize) / 2.0;
-        int x2 = x1 + glAreaSize;
-
-        static Gtk::Table belowTitleBar;
+        static Gtk::Notebook notebook;
+        notebook.set_tab_pos(Gtk::POS_LEFT);
         {
-            static Gtk::Box sideBar(Gtk::ORIENTATION_VERTICAL);
-            sideBar.set_name("side_bar");
-            {
-                static Gtk::ToggleButton presentationModeButton;
-                presentationModeButton.set_name("side_bar_node");
-                {
-                    static Gtk::Box presentationMode;
-                    presentationMode.set_name("side_bar_node");
-                    {
-                        static Gtk::Image icon(pIconPresentation->scale_simple(64, 64, Gdk::INTERP_BILINEAR));
-                        static Gtk::Label label("Presentation Mode");
-                        icon.set_name("side_bar_node");
-                        label.set_name("side_bar_node");
-                        presentationMode.pack_start(icon, Gtk::PACK_SHRINK);
-                        presentationMode.pack_start(label, Gtk::PACK_SHRINK);
-                    }
-                    presentationModeButton.add(presentationMode);
-                }
-
-                sideBar.pack_start(presentationModeButton, Gtk::PACK_SHRINK);
+            { // Presentation Mode
+                static Gtk::Image icon(pIconPresentation->scale_simple(128, 128, Gdk::INTERP_BILINEAR));
+                static Gtk::Box page;
+                notebook.append_page(page, icon);
             }
-            belowTitleBar.attach(sideBar, 0, x1, 0, 1);
+            { // Ground Station Control
+                static Gtk::Image icon(pIconGroundStation->scale_simple(128, 128, Gdk::INTERP_BILINEAR));
+                static Gtk::Box page;
+                notebook.append_page(page, icon);
+            }
+            { // Satellite Control
+                static Gtk::Image icon(pIconSatellite->scale_simple(128, 128, Gdk::INTERP_BILINEAR));
+                static Gtk::Box page;
+                notebook.append_page(page, icon);
+            }
         }
-        {
-            static GLArea glArea;
-            belowTitleBar.attach(glArea, x1, x2, 0, 1);
-        }
-        {
-            static Gtk::Box rest;
-            belowTitleBar.attach(rest, x2, width, 0, 1);
-        }
-        layout.pack_start(belowTitleBar, Gtk::PACK_EXPAND_WIDGET);
+        layout.pack_start(notebook);
     }
     add(layout);
     show_all();
