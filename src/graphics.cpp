@@ -14,16 +14,16 @@ Graphics::Graphics(GroundStation &groundStation) : groundStation(groundStation)
     pApplication = Gtk::Application::create();
     {
         auto pScreen = Gdk::Screen::get_default();
-        { // Load CSS from resource
+        { // Load CSS from file
             auto pCSSProvider = Gtk::CssProvider::create();
             Gtk::StyleContext::add_provider_for_screen(pScreen, pCSSProvider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-            pCSSProvider->load_from_resource("/style.css");
+            pCSSProvider->load_from_path("res/style.css");
         }
         { // Load icons
-            pIconGroundStation = Gdk::Pixbuf::create_from_resource("/ground_station.png");
-            pIconSatellite = Gdk::Pixbuf::create_from_resource("/satellite.png");
-            pIconRogozin = Gdk::Pixbuf::create_from_resource("/rogozin.png");
-            pIconPresentation = Gdk::Pixbuf::create_from_resource("/presentation.png");
+            pIconGroundStation = Gdk::Pixbuf::create_from_file("res/ground_station.png");
+            pIconSatellite = Gdk::Pixbuf::create_from_file("res/satellite.png");
+            pIconRogozin = Gdk::Pixbuf::create_from_file("res/rogozin.png");
+            pIconPresentation = Gdk::Pixbuf::create_from_file("res/presentation.png");
         }
         width = pScreen->get_width();
         height = pScreen->get_height();

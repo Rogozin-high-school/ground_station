@@ -1,6 +1,7 @@
 #pragma once
 
-class GroundStation {
+class GroundStation
+{
 public:
     bool isConnected = false;
 
