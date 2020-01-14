@@ -1,5 +1,5 @@
 #pragma once
-#include <ground_station.hpp>
+#include <GroundStation.hpp>
 #include <gtkmm.h>
 
 class Graphics

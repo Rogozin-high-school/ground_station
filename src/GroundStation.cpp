@@ -1,5 +1,5 @@
-#include <ground_station.hpp>
-#include <graphics.hpp>
+#include <GroundStation.hpp>
+#include <Graphics.hpp>
 
 int main()
 {

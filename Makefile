@@ -12,8 +12,8 @@ LIBS               = \
 	-lpthread
 OUT                = ground_station
 SRC                = \
-	src/ground_station.cpp \
-	src/graphics.cpp
+	src/GroundStation.cpp \
+	src/Graphics.cpp
 OBJS               = $(SRC:.cpp=.o)
 
 build: $(OBJS)

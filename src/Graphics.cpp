@@ -1,4 +1,4 @@
-#include <graphics.hpp>
+#include <Graphics.hpp>
 #include <GL/gl.h>
 
 Glib::RefPtr<Gdk::Pixbuf> pIconGroundStation;
