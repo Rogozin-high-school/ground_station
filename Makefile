@@ -13,7 +13,11 @@ LIBS               = \
 OUT                = ground_station
 SRC                = \
 	src/GroundStation.cpp \
-	src/Graphics.cpp
+	src/BackEnd.cpp \
+	src/FrontEnd.cpp \
+	src/FrontEnd/Window.cpp \
+	src/FrontEnd/Pages/CLI.cpp \
+	src/FrontEnd/Pages/Settings.cpp
 OBJS               = $(SRC:.cpp=.o)
 
 build: $(OBJS)

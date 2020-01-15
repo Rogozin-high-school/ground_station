@@ -1,22 +1,32 @@
-window {
-    background: #202020;
-}
-
 #title_bar {
-    font: 72px "Ubuntu";
+    font: 54px "Ubuntu";
     font-weight: bold;
     color: darkcyan;
-    background: #303030;
+    background: #2a2a2a;
 }
 
-#title_bar_inner {
+#title_bar box {
     margin: 8px;
 }
 
-label#title_bar_inner {
+#title_bar image {
+    margin: 8px;
+}
+
+#title_bar label {
+    margin: 8px;
     margin-left: 8px;
 }
 
-notebook box {
-    background: #353535; 
+#page_cli scrolledwindow {
+    margin: 8px;
+}
+
+#page_cli textview {
+    font: 24px "Ubuntu Mono";
+}
+
+#page_cli entry {
+    font: bold 36px "Ubuntu Mono";
+    background: #202020;
 }

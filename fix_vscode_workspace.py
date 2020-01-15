@@ -9,6 +9,10 @@ data = {
     "C_Cpp.default.includePath": [
         "include"
     ],
+    "C_Cpp.default.defines": [
+        "LOGGING",
+        "LOGGING_FUNCTION_CALLS"
+    ],
     "files.exclude": {
         "ground_station": True,
         ".vscode": True,

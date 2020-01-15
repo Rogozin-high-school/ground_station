@@ -1,10 +1,8 @@
 #pragma once
 
-class GroundStation
+struct GroundStation
 {
-public:
-    bool isConnected = false;
-
-    GroundStation();
-    void quit();
+    static void initialize();
+    static void run();
+    static void quit();
 };
