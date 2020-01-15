@@ -7,6 +7,8 @@
 #include <gtkmm/textview.h>
 #include <gtkmm/entry.h>
 
+Gtk::TextView *pTextView;
+
 void load_page(Gtk::Box &page);
 
 void FrontEnd::Pages::CLI::load(Gtk::Notebook &notebook)
@@ -17,19 +19,25 @@ void FrontEnd::Pages::CLI::load(Gtk::Notebook &notebook)
     load_page(page);
 }
 
+Glib::RefPtr<Gtk::TextBuffer> FrontEnd::Pages::CLI::get_text_buffer()
+{
+    return pTextView->get_buffer();
+}
+
 inline void load_page(Gtk::Box &page)
 {
     page.set_name("page_cli");
 
     static Gtk::Box textView_box;
     static Gtk::ScrolledWindow textView_scrolledWindow;
-    static Gtk::TextView textView;
+    pTextView = Gtk::manage(new Gtk::TextView);
+    
     static Gtk::Entry entry;
 
-    textView_scrolledWindow.add(textView);
+    textView_scrolledWindow.add(*pTextView);
     textView_box.pack_start(textView_scrolledWindow);
-    textView.set_cursor_visible(false);
-    textView.set_editable(false);
+    pTextView->set_cursor_visible(false);
+    pTextView->set_editable(false);
 
     page.pack_start(textView_box);
     page.pack_start(entry, Gtk::PACK_SHRINK);

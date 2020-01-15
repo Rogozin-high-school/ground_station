@@ -6,7 +6,7 @@ IFLAGS             = \
 LFLAGS             = \
 	`$(GTK_CFG) --libs`
 FLAGS              = \
-	-s -O3 -std=gnu++17 -Wall
+	-s -O3 -std=gnu++17 -Wall -Wno-unused-result
 LIBS               = \
 	-lGL \
 	-lpthread
@@ -15,6 +15,7 @@ SRC                = \
 	src/GroundStation.cpp \
 	src/BackEnd.cpp \
 	src/FrontEnd.cpp \
+	src/FrontEnd/Logger.cpp \
 	src/FrontEnd/Window.cpp \
 	src/FrontEnd/Pages/CLI.cpp \
 	src/FrontEnd/Pages/Settings.cpp

@@ -3,6 +3,8 @@
 #include <FrontEnd/Pages/CLI.hpp>
 #include <FrontEnd/Pages/Settings.hpp>
 
+#include <FrontEnd/Logger.hpp>
+
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
@@ -62,4 +64,6 @@ inline void build_notebook(Gtk::Box &layout)
     FrontEnd::Pages::Settings::load(notebook);
 
     layout.pack_start(notebook);
+
+    Logger::print("Should print this!");
 }

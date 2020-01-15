@@ -15,6 +15,7 @@ data = {
     ],
     "files.exclude": {
         "ground_station": True,
+        "logs": True,
         ".vscode": True,
         ".gitignore": True,
         "res": False,

@@ -1,5 +1,7 @@
 #include <FrontEnd.hpp>
+#include <FrontEnd/Logger.hpp>
 #include <FrontEnd/Window.hpp>
+
 #include <gtkmm/application.h>
 #include <gtkmm/cssprovider.h>
 
@@ -12,7 +14,6 @@ Glib::RefPtr<Gdk::Pixbuf>
     iconGears;
 } // namespace FrontEnd::Resources::Pixbufs
 
-
 Glib::RefPtr<Gtk::Application>
     application;
 
@@ -22,6 +23,9 @@ Glib::RefPtr<Gdk::Pixbuf> scale_image();
 void FrontEnd::initialize()
 {
     application = Gtk::Application::create();
+
+    // Initialize the logger
+    Logger::initialize();
 
     // Now only after the application is created, can you allocate memory for UI stuff.
     Resources::Pixbufs::load();
@@ -40,6 +44,9 @@ void FrontEnd::run()
 
 void FrontEnd::quit()
 {
+    // Destroy the logger
+    Logger::quit();
+
     application->quit();
 }
 
