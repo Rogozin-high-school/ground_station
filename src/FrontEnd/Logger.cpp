@@ -10,19 +10,18 @@ void Logger::initialize()
     // Get the current time and date (long)
     auto now = std::chrono::system_clock::now();
     auto time = std::chrono::system_clock::to_time_t(now);
+
     std::string timeStr{ctime(&time)};
-    std::replace(begin(timeStr), end(timeStr), ' ', '_');
-    std::replace(begin(timeStr), end(timeStr), ':', '-');
-    timeStr = timeStr.substr(0, timeStr.length() - 1);
+    timeStr.pop_back();
 
     // Create logs folder is doesn't already exist
     system("mkdir -p logs");
 
     // Create a log file
-    logFile.open("logs/" + timeStr + ".log");
+    logFile.open("logs/" + timeStr);
 }
 
-void Logger::print(std::string&& text, bool endl)
+void Logger::print(std::string &&text, bool endl)
 {
     // Get the current time (short)
     {
