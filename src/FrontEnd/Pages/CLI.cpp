@@ -29,7 +29,7 @@ Gtk::TextView *pTextView;
 void FrontEnd::Pages::CLI::load(Gtk::Notebook *pNotebook)
 {
     auto pPage = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
-    auto pIcon = Gtk::manage(new Gtk::Image(Resources::Pixbufs::pIconConsole->scale_simple(96, 96, Gdk::INTERP_BILINEAR)));
+    auto pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconConsole, 96)));
     pNotebook->append_page(*pPage, *pIcon);
     load_page(pPage);
 }

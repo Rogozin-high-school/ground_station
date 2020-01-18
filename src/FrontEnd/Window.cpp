@@ -36,7 +36,7 @@ inline void build_title_bar()
     auto pTitleBar = Gtk::manage(new Gtk::Box);
     auto pTitleBarInner = Gtk::manage(new Gtk::Box);
 
-    auto pIconPixbuf = FrontEnd::Resources::Pixbufs::pIconGroundStation->scale_simple(96, 96, Gdk::INTERP_BILINEAR);
+    auto pIconPixbuf = SCALE(FrontEnd::Resources::Pixbufs::pIconGroundStation, 96);
     auto pIcon = Gtk::manage(new Gtk::Image(pIconPixbuf));
     auto pLabel = Gtk::manage(new Gtk::Label("Rogozin's Ground Station"));
 

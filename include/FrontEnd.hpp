@@ -24,10 +24,12 @@ extern Glib::RefPtr<Gdk::Pixbuf>
     pIconConsole,
     pIconGears;
 
+#define SCALE(pixbuf, size) pixbuf->scale_simple(size, size, Gdk::INTERP_BILINEAR)
+
 } // namespace Resources::Pixbufs
 
 void initialize();
 void run();
 void quit();
 
-} // namespace FrontEnd
+}

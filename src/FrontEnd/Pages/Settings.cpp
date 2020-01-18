@@ -7,6 +7,6 @@
 void FrontEnd::Pages::Settings::load(Gtk::Notebook *pNotebook)
 {
     auto pPage = Gtk::manage(new Gtk::Box);
-    auto pIcon = Gtk::manage(new Gtk::Image(Resources::Pixbufs::pIconGears->scale_simple(96, 96, Gdk::INTERP_BILINEAR)));
+    auto pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconGears, 96)));
     pNotebook->append_page(*pPage, *pIcon);
 }

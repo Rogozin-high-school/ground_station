@@ -37,7 +37,6 @@ Glib::RefPtr<Gtk::Application>
     pApplication;
 
 void load_CSS();
-Glib::RefPtr<Gdk::Pixbuf> scale_image();
 
 void FrontEnd::initialize()
 {
