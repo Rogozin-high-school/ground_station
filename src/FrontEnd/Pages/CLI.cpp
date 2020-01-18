@@ -7,22 +7,24 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
 
-Gtk::TextView *pTextView;
-FrontEnd::Pages::CLI::Entry *pEntry;
-
 void load_page(Gtk::Box *pPage);
 void process_command(const Glib::ustring &command);
 
-void FrontEnd::Pages::CLI::Entry::on_activate()
+struct Entry : Gtk::Entry
 {
-    auto pBuffer = pEntry->get_buffer();
+protected:
+    void on_activate() override
+    {
+        auto pBuffer = get_buffer();
 
-    auto text = pBuffer->get_text();
-    pBuffer->set_text("");
-    
-    Logger::print("> " + text);
-    process_command(text);
-}
+        auto text = pBuffer->get_text();
+        pBuffer->set_text("");
+        
+        Logger::print("> " + text);
+        process_command(text);
+    }
+} *pEntry;
+Gtk::TextView *pTextView;
 
 void FrontEnd::Pages::CLI::load(Gtk::Notebook *pNotebook)
 {
@@ -45,7 +47,7 @@ inline void load_page(Gtk::Box *pPage)
     auto pTextView_scrolledWindow = Gtk::manage(new Gtk::ScrolledWindow);
     pTextView = Gtk::manage(new Gtk::TextView);
     
-    pEntry = Gtk::manage(new FrontEnd::Pages::CLI::Entry);
+    pEntry = Gtk::manage(new Entry);
 
     pTextView_scrolledWindow->add(*pTextView);
     pTextView_box->pack_start(*pTextView_scrolledWindow);

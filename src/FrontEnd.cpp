@@ -5,6 +5,17 @@
 #include <gtkmm/application.h>
 #include <gtkmm/cssprovider.h>
 
+namespace FrontEnd::Resources::Paths
+{
+
+const std::string
+    CSSProvider = "res/style.css",
+    iconGroundStation = "res/ground_station.png",
+    iconConsole = "res/console.png",
+    iconGears = "res/gears.png";
+
+} // namespace Resources::Paths
+
 namespace FrontEnd::Resources::Pixbufs
 {
 // Link these resources that were declared in <FrontEnd.hpp>
@@ -12,6 +23,14 @@ Glib::RefPtr<Gdk::Pixbuf>
     pIconGroundStation,
     pIconConsole,
     pIconGears;
+
+void load()
+{
+    pIconGroundStation = Gdk::Pixbuf::create_from_file(Paths::iconGroundStation);
+    pIconConsole = Gdk::Pixbuf::create_from_file(Paths::iconConsole);
+    pIconGears = Gdk::Pixbuf::create_from_file(Paths::iconGears);
+}
+
 } // namespace FrontEnd::Resources::Pixbufs
 
 Glib::RefPtr<Gtk::Application>

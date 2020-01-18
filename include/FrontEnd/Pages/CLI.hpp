@@ -8,12 +8,6 @@ namespace FrontEnd::Pages
 
 struct CLI
 {
-    struct Entry : Gtk::Entry
-    {
-    protected:
-        void on_activate() override;
-    };
-    
     static void load(Gtk::Notebook *pNotebook);
     static Glib::RefPtr<Gtk::TextBuffer> get_text_buffer();
 };
