@@ -9,20 +9,20 @@ namespace FrontEnd::Resources::Pixbufs
 {
 // Link these resources that were declared in <FrontEnd.hpp>
 Glib::RefPtr<Gdk::Pixbuf>
-    iconGroundStation,
-    iconConsole,
-    iconGears;
+    pIconGroundStation,
+    pIconConsole,
+    pIconGears;
 } // namespace FrontEnd::Resources::Pixbufs
 
 Glib::RefPtr<Gtk::Application>
-    application;
+    pApplication;
 
 void load_CSS();
 Glib::RefPtr<Gdk::Pixbuf> scale_image();
 
 void FrontEnd::initialize()
 {
-    application = Gtk::Application::create();
+    pApplication = Gtk::Application::create();
 
     // Initialize the logger
     Logger::initialize();
@@ -39,7 +39,7 @@ void FrontEnd::run()
     // application->run runs on the main thread, hence it pauses the thread;
     // Thus, the window created here will not deallocate as long as the front-end is running,
     // and therefore there is no need for static/dynamic allocation for the window.
-    application->run(window);
+    pApplication->run(window);
 }
 
 void FrontEnd::quit()
@@ -47,13 +47,13 @@ void FrontEnd::quit()
     // Destroy the logger
     Logger::quit();
 
-    application->quit();
+    pApplication->quit();
 }
 
 inline void load_CSS()
 {
-    auto screen = Gdk::Screen::get_default();
-    auto CSSProvider = Gtk::CssProvider::create();
-    Gtk::StyleContext::add_provider_for_screen(screen, CSSProvider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    CSSProvider->load_from_path(FrontEnd::Resources::Paths::CSSProvider);
+    auto pScreen = Gdk::Screen::get_default();
+    auto pCSSProvider = Gtk::CssProvider::create();
+    Gtk::StyleContext::add_provider_for_screen(pScreen, pCSSProvider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    pCSSProvider->load_from_path(FrontEnd::Resources::Paths::CSSProvider);
 }

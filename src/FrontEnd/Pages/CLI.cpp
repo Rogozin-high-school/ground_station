@@ -1,22 +1,35 @@
 #include <FrontEnd/Pages/CLI.hpp>
+#include <FrontEnd/Logger.hpp>
 #include <FrontEnd.hpp>
 
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
-#include <gtkmm/entry.h>
 
 Gtk::TextView *pTextView;
+FrontEnd::Pages::CLI::Entry *pEntry;
 
-void load_page(Gtk::Box &page);
+void load_page(Gtk::Box *pPage);
+void process_command(const Glib::ustring &command);
 
-void FrontEnd::Pages::CLI::load(Gtk::Notebook &notebook)
+void FrontEnd::Pages::CLI::Entry::on_activate()
 {
-    static Gtk::Box page(Gtk::ORIENTATION_VERTICAL);
-    static Gtk::Image icon(Resources::Pixbufs::iconConsole->scale_simple(96, 96, Gdk::INTERP_BILINEAR));
-    notebook.append_page(page, icon);
-    load_page(page);
+    auto pBuffer = pEntry->get_buffer();
+
+    auto text = pBuffer->get_text();
+    pBuffer->set_text("");
+    
+    Logger::print("> " + text);
+    process_command(text);
+}
+
+void FrontEnd::Pages::CLI::load(Gtk::Notebook *pNotebook)
+{
+    auto pPage = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
+    auto pIcon = Gtk::manage(new Gtk::Image(Resources::Pixbufs::pIconConsole->scale_simple(96, 96, Gdk::INTERP_BILINEAR)));
+    pNotebook->append_page(*pPage, *pIcon);
+    load_page(pPage);
 }
 
 Glib::RefPtr<Gtk::TextBuffer> FrontEnd::Pages::CLI::get_text_buffer()
@@ -24,21 +37,29 @@ Glib::RefPtr<Gtk::TextBuffer> FrontEnd::Pages::CLI::get_text_buffer()
     return pTextView->get_buffer();
 }
 
-inline void load_page(Gtk::Box &page)
+inline void load_page(Gtk::Box *pPage)
 {
-    page.set_name("page_cli");
+    pPage->set_name("page_cli");
 
-    static Gtk::Box textView_box;
-    static Gtk::ScrolledWindow textView_scrolledWindow;
+    auto pTextView_box = Gtk::manage(new Gtk::Box);
+    auto pTextView_scrolledWindow = Gtk::manage(new Gtk::ScrolledWindow);
     pTextView = Gtk::manage(new Gtk::TextView);
     
-    static Gtk::Entry entry;
+    pEntry = Gtk::manage(new FrontEnd::Pages::CLI::Entry);
 
-    textView_scrolledWindow.add(*pTextView);
-    textView_box.pack_start(textView_scrolledWindow);
+    pTextView_scrolledWindow->add(*pTextView);
+    pTextView_box->pack_start(*pTextView_scrolledWindow);
     pTextView->set_cursor_visible(false);
     pTextView->set_editable(false);
 
-    page.pack_start(textView_box);
-    page.pack_start(entry, Gtk::PACK_SHRINK);
+    pPage->pack_start(*pTextView_box);
+    pPage->pack_start(*pEntry, Gtk::PACK_SHRINK);
+}
+
+inline void process_command(const Glib::ustring &command)
+{
+    if (command == "exit" || command == "quit" || command == "terminate" || command == "close" || command == "stop")
+    {
+        FrontEnd::quit();
+    }
 }

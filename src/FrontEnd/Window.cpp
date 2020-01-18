@@ -9,61 +9,53 @@
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 
-void build_layout(FrontEnd::Window &window);
-void build_title_bar(Gtk::Box &layout);
-void build_notebook(Gtk::Box &layout);
+Gtk::Box *pLayout;
+
+void build_layout(FrontEnd::Window *pWindow);
+void build_title_bar();
+void build_notebook();
 
 FrontEnd::Window::Window()
 {
-    set_default_icon(Resources::Pixbufs::iconGroundStation);
+    set_default_icon(Resources::Pixbufs::pIconGroundStation);
     fullscreen();
-    add_events(Gdk::KEY_PRESS_MASK);
-    build_layout(*this);
+    build_layout(this);
     show_all();
 }
 
-bool FrontEnd::Window::on_key_press_event(GdkEventKey *event)
+inline void build_layout(FrontEnd::Window *pWindow)
 {
-    if (event->keyval == GDK_KEY_Escape)
-    {
-        FrontEnd::quit();
-    }
-    return true;
+    pLayout = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
+    build_title_bar();
+    build_notebook();
+    pWindow->add(*pLayout);
 }
 
-inline void build_layout(FrontEnd::Window &window)
+inline void build_title_bar()
 {
-    static Gtk::Box layout(Gtk::ORIENTATION_VERTICAL);
-    build_title_bar(layout);
-    build_notebook(layout);
-    window.add(layout);
+    auto pTitleBar = Gtk::manage(new Gtk::Box);
+    auto pTitleBarInner = Gtk::manage(new Gtk::Box);
+
+    auto pIconPixbuf = FrontEnd::Resources::Pixbufs::pIconGroundStation->scale_simple(96, 96, Gdk::INTERP_BILINEAR);
+    auto pIcon = Gtk::manage(new Gtk::Image(pIconPixbuf));
+    auto pLabel = Gtk::manage(new Gtk::Label("Rogozin's Ground Station"));
+
+    pTitleBar->set_name("title_bar");
+    pTitleBar->add(*pTitleBarInner);
+
+    pTitleBarInner->pack_start(*pIcon, Gtk::PACK_SHRINK);
+    pTitleBarInner->pack_start(*pLabel, Gtk::PACK_SHRINK);
+
+    pLayout->pack_start(*pTitleBar, Gtk::PACK_SHRINK);
 }
 
-inline void build_title_bar(Gtk::Box &layout)
+inline void build_notebook()
 {
-    static Gtk::Box titleBar;
-    static Gtk::Box titleBarInner;
-    static Gtk::Image icon(FrontEnd::Resources::Pixbufs::iconGroundStation->scale_simple(96, 96, Gdk::INTERP_BILINEAR));
-    static Gtk::Label label("Rogozin's Ground Station");
+    auto pNotebook = Gtk::manage(new Gtk::Notebook);
+    pNotebook->set_tab_pos(Gtk::POS_LEFT);
 
-    titleBar.set_name("title_bar");
-    titleBar.add(titleBarInner);
-    
-    titleBarInner.pack_start(icon, Gtk::PACK_SHRINK);
-    titleBarInner.pack_start(label, Gtk::PACK_SHRINK);
-    
-    layout.pack_start(titleBar, Gtk::PACK_SHRINK);
-}
+    FrontEnd::Pages::CLI::load(pNotebook);
+    FrontEnd::Pages::Settings::load(pNotebook);
 
-inline void build_notebook(Gtk::Box &layout)
-{
-    static Gtk::Notebook notebook;
-    notebook.set_tab_pos(Gtk::POS_LEFT);
-
-    FrontEnd::Pages::CLI::load(notebook);
-    FrontEnd::Pages::Settings::load(notebook);
-
-    layout.pack_start(notebook);
-
-    Logger::print("Should print this!");
+    pLayout->pack_start(*pNotebook);
 }

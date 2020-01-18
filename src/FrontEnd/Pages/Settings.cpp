@@ -4,9 +4,9 @@
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 
-void FrontEnd::Pages::Settings::load(Gtk::Notebook &notebook)
+void FrontEnd::Pages::Settings::load(Gtk::Notebook *pNotebook)
 {
-    static Gtk::Box page;
-    static Gtk::Image icon(Resources::Pixbufs::iconGears->scale_simple(96, 96, Gdk::INTERP_BILINEAR));
-    notebook.append_page(page, icon);
+    auto pPage = Gtk::manage(new Gtk::Box);
+    auto pIcon = Gtk::manage(new Gtk::Image(Resources::Pixbufs::pIconGears->scale_simple(96, 96, Gdk::INTERP_BILINEAR)));
+    pNotebook->append_page(*pPage, *pIcon);
 }
