@@ -14,7 +14,7 @@ void Logger::initialize()
     std::string timeStr{ctime(&time)};
     timeStr.pop_back();
 
-    // Create logs folder is doesn't already exist
+    // Create logs folder if doesn't already exist
     system("mkdir -p logs");
 
     // Create a log file
