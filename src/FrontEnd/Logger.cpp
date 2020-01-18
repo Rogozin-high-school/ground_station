@@ -15,7 +15,7 @@ void Logger::initialize()
     std::replace(begin(timeStr), end(timeStr), ':', '-');
     timeStr = timeStr.substr(0, timeStr.length() - 1);
 
-    // Create logs folder is doesn't already exist
+    // Create logs folder if doesn't already exist
     system("mkdir -p logs");
 
     // Create a log file
