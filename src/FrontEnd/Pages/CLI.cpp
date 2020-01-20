@@ -1,7 +1,9 @@
 #include <FrontEnd/Pages/CLI.hpp>
-#include <FrontEnd/Logger.hpp>
 #include <FrontEnd.hpp>
 
+#include <Logger.hpp>
+
+#include <gtkmm/entry.h>
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/scrolledwindow.h>
@@ -20,7 +22,7 @@ protected:
         auto text = pBuffer->get_text();
         pBuffer->set_text("");
         
-        Logger::print("> " + text);
+        Logger::print_raw("> " + text);
         process_command(text);
     }
 } *pEntry;
@@ -32,11 +34,13 @@ void FrontEnd::Pages::CLI::load(Gtk::Notebook *pNotebook)
     auto pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconConsole, 96)));
     pNotebook->append_page(*pPage, *pIcon);
     load_page(pPage);
+
+    append(Logger::get_last_text());
 }
 
-Glib::RefPtr<Gtk::TextBuffer> FrontEnd::Pages::CLI::get_text_buffer()
+void FrontEnd::Pages::CLI::append(const Glib::ustring &text)
 {
-    return pTextView->get_buffer();
+    pTextView->get_buffer()->insert_at_cursor(text);   
 }
 
 inline void load_page(Gtk::Box *pPage)

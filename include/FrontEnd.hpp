@@ -28,6 +28,7 @@ extern Glib::RefPtr<Gdk::Pixbuf>
 
 } // namespace Resources::Pixbufs
 
+extern bool isRunning;
 void initialize();
 void run();
 void quit();

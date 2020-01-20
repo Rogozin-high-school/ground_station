@@ -3,7 +3,7 @@
 #include <FrontEnd/Pages/CLI.hpp>
 #include <FrontEnd/Pages/Settings.hpp>
 
-#include <FrontEnd/Logger.hpp>
+#include <Logger.hpp>
 
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
@@ -18,7 +18,11 @@ void build_notebook();
 FrontEnd::Window::Window()
 {
     set_default_icon(Resources::Pixbufs::pIconGroundStation);
-    fullscreen();
+    {
+        auto pScreen = Gdk::Screen::get_default();
+        int nMonitors = pScreen->get_n_monitors();
+        fullscreen_on_monitor(pScreen, nMonitors - 1); // Last monitor
+    }
     build_layout(this);
     show_all();
 }

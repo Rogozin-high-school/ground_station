@@ -13,9 +13,9 @@ LIBS               = \
 OUT                = ground_station
 SRC                = \
 	src/GroundStation.cpp \
+	src/Logger.cpp \
 	src/BackEnd.cpp \
 	src/FrontEnd.cpp \
-	src/FrontEnd/Logger.cpp \
 	src/FrontEnd/Window.cpp \
 	src/FrontEnd/Pages/CLI.cpp \
 	src/FrontEnd/Pages/Settings.cpp

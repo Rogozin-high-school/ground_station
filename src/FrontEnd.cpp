@@ -1,5 +1,4 @@
 #include <FrontEnd.hpp>
-#include <FrontEnd/Logger.hpp>
 #include <FrontEnd/Window.hpp>
 
 #include <gtkmm/application.h>
@@ -33,17 +32,15 @@ void load()
 
 } // namespace FrontEnd::Resources::Pixbufs
 
-Glib::RefPtr<Gtk::Application>
-    pApplication;
+bool FrontEnd::isRunning = false;
+
+Glib::RefPtr<Gtk::Application> pApplication;
 
 void load_CSS();
 
 void FrontEnd::initialize()
 {
     pApplication = Gtk::Application::create();
-
-    // Initialize the logger
-    Logger::initialize();
 
     // Now only after the application is created, can you allocate memory for UI stuff.
     Resources::Pixbufs::load();
@@ -53,6 +50,7 @@ void FrontEnd::initialize()
 void FrontEnd::run()
 {
     Window window;
+    isRunning = true;
 
     // application->run runs on the main thread, hence it pauses the thread;
     // Thus, the window created here will not deallocate as long as the front-end is running,
@@ -62,9 +60,6 @@ void FrontEnd::run()
 
 void FrontEnd::quit()
 {
-    // Destroy the logger
-    Logger::quit();
-
     pApplication->quit();
 }
 
