@@ -34,63 +34,63 @@ void Logger::quit()
     logFileStream.close();
 }
 
-const Glib::ustring Logger::get_last_text()
+const Glib::ustring Logger::get_last_markup()
 {
     return logStringStream.str();
 }
 
-void Logger::print_raw(Glib::ustring &&text, bool endl)
+const Glib::ustring Logger::get_current_time()
 {
-    // Get the current time (short)
-    {
-        char buffer[12];
-        time_t t;
-        time(&t);
-        strftime(buffer, sizeof(buffer), "[%H:%M:%S] ", localtime(&t));
-        text = buffer + text;
-    }
+    char buffer[12];
+    time_t t;
+    time(&t);
+    strftime(buffer, sizeof(buffer), "[%H:%M:%S]", localtime(&t));
+    return "<span foreground='grey'>" + Glib::ustring(buffer) + "</span>";
+}
 
+void Logger::print_raw(Glib::ustring &&markup, bool endl)
+{
     if (endl)
     {
-        text += "\n";
+        markup += "\n";
     }
 
-    logFileStream << text;
+    logFileStream << markup;
 
     // You probably ask yourself why I made that weird and complicated.
     // Well, the answer is that you can't print to the console before it was created.
-    // Therefore I must save all the text to be printed before the console had been created,
+    // Therefore I must save all the markup to be printed before the console had been created,
     // and print it in one shot right after it is done.
 
-    logStringStream << text;
+    logStringStream << markup;
 
     if (FrontEnd::isRunning)
     {
-        FrontEnd::Pages::CLI::append(text);
+        FrontEnd::Pages::CLI::append(markup);
     }
 }
 
-void Logger::verbose(Glib::ustring &&text, bool endl)
+void Logger::verbose(Glib::ustring &&markup, bool endl)
 {
-    print_raw("[Verbose] " + text, endl);
+    print_raw(get_current_time() + "<span foreground='grey'> " + markup + "</span>", endl);
 }
 
-void Logger::debug(Glib::ustring &&text, bool endl)
+void Logger::debug(Glib::ustring &&markup, bool endl)
 {
-    print_raw("[Debug]   " + text, endl);
+    print_raw(get_current_time() + "<span foreground='cyan'> " + markup + "</span>", endl);
 }
 
-void Logger::info(Glib::ustring &&text, bool endl)
+void Logger::info(Glib::ustring &&markup, bool endl)
 {
-    print_raw("[Info]    " + text, endl);
+    print_raw(get_current_time() + "<span foreground='white'> " + markup + "</span>", endl);
 }
 
-void Logger::warn(Glib::ustring &&text, bool endl)
+void Logger::warn(Glib::ustring &&markup, bool endl)
 {
-    print_raw("[Warn]    " + text, endl);
+    print_raw(get_current_time() + "<span foreground='red'> " + markup + "</span>", endl);
 }
 
-void Logger::error(Glib::ustring &&text, bool endl)
+void Logger::error(Glib::ustring &&markup, bool endl)
 {
-    print_raw("[Error]   " + text, endl);
+    print_raw(get_current_time() + "<span foreground='red' weight = 'bold'> " + markup + "</span>", endl);
 }

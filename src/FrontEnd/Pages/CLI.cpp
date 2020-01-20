@@ -19,11 +19,16 @@ protected:
     {
         auto pBuffer = get_buffer();
 
-        auto text = pBuffer->get_text();
+        auto markup = pBuffer->get_text();
+        if (markup.empty())
+        {
+            return;
+        }
+        
         pBuffer->set_text("");
         
-        Logger::print_raw("> " + text);
-        process_command(text);
+        Logger::print_raw(Logger::get_current_time() + " <span weight='bold'>> '" + markup + "'</span>");
+        process_command(markup);
     }
 } *pEntry;
 Gtk::TextView *pTextView;
@@ -35,12 +40,14 @@ void FrontEnd::Pages::CLI::load(Gtk::Notebook *pNotebook)
     pNotebook->append_page(*pPage, *pIcon);
     load_page(pPage);
 
-    append(Logger::get_last_text());
+    append(Logger::get_last_markup());
 }
 
-void FrontEnd::Pages::CLI::append(const Glib::ustring &text)
+void FrontEnd::Pages::CLI::append(const Glib::ustring &markup)
 {
-    pTextView->get_buffer()->insert_at_cursor(text);   
+    auto pBuffer = pTextView->get_buffer();
+    auto pCursor = pBuffer->end();
+    pBuffer->insert_markup(pCursor, markup);
 }
 
 inline void load_page(Gtk::Box *pPage)
