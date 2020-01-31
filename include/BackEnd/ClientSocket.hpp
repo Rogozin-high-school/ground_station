@@ -11,6 +11,7 @@ struct ClientSocket
     ClientSocket(SocketFd socketFd, SocketAddress socketAddress);
 
     void client_set_timeout(suseconds_t timeoutMicros) const;
+    ssize_t client_recv(uint8_t *buffer, size_t size) const;
     void client_close() const;
 
     SocketFd get_socket_fd() const;

@@ -6,7 +6,7 @@ IFLAGS             = \
 LFLAGS             = \
 	`$(GTK_CFG) --libs`
 FLAGS              = \
-	-s -O3 -std=gnu++17 -Wall -Wno-unused-result
+	-s -g -O0 -std=gnu++17 -Wall -Wno-unused-result
 LIBS               = \
 	-lGL \
 	-lpthread

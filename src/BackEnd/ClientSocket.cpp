@@ -14,10 +14,15 @@ BackEnd::ClientSocket::ClientSocket(SocketFd _socketFd, SocketAddress _socketAdd
     socketAddress = _socketAddress;
 }
 
+ssize_t BackEnd::ClientSocket::client_recv(uint8_t *buffer, size_t size) const
+{
+    return recv(socketFd, buffer, size, 0);
+}
+
 void BackEnd::ClientSocket::client_set_timeout(suseconds_t timeoutMicros) const
 {
     timeval timeout = {timeoutMicros / 1000000, timeoutMicros % 1000000};
-    if (setsockopt(socketFd, SOL_SOCKET, SO_RCVTIMEO | SO_SNDTIMEO, &timeout, sizeof(timeval)) == -1)
+    if (setsockopt(socketFd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeval)) == -1)
     {
         throw std::runtime_error("Unable to set socket timeout!");
     }

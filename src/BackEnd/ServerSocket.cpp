@@ -11,15 +11,6 @@ BackEnd::ServerSocket::ServerSocket(int port)
     socketAddress = {AF_INET, htons(port), {INADDR_ANY}};
 }
 
-BackEnd::ServerSocket::~ServerSocket()
-{
-    if (socketFd != -1)
-    {
-        shutdown(socketFd, SHUT_RDWR);
-        close(socketFd);
-    }
-}
-
 void BackEnd::ServerSocket::server_open_socket() const
 {
     socketFd = socket(AF_INET, SOCK_STREAM, 0);
@@ -69,4 +60,13 @@ BackEnd::ClientSocket BackEnd::ServerSocket::server_accept() const
     }
 
     return ClientSocket(clientSocketFd, clientSocketAddress);
+}
+
+void BackEnd::ServerSocket::server_close() const
+{
+    if (socketFd != -1)
+    {
+        shutdown(socketFd, SHUT_RDWR);
+        close(socketFd);
+    }
 }

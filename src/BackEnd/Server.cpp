@@ -36,6 +36,7 @@ void BackEnd::Server::quit()
     {
         close_connection_with(client);
     }
+    serverSocket.server_close();
     Logger::verbose("Server is dead!");
 }
 
@@ -46,15 +47,13 @@ bool BackEnd::Server::is_open()
 
 void BackEnd::Server::close_connection_with(const Client &client)
 {
-    client.clientSocket.client_close();
-    Logger::info(client.clientSocket.ip + " -> Closed connection!");
     clients.erase(std::remove(clients.begin(), clients.end(), client));
 }
 
 void host()
 {
     Logger::info("Server is running on port " + std::to_string(port) + "!");
-    while (clients.size() < maxClients)
+    while (true)
     {
         try 
         {

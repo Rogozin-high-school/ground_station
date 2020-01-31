@@ -3,6 +3,8 @@
 #include <gtkmm/application.h>
 #include <gtkmm/cssprovider.h>
 
+bool FrontEnd::isRunning = false;
+
 namespace FrontEnd::Resources::Paths
 {
 
@@ -30,8 +32,6 @@ static void load()
 }
 
 } // namespace FrontEnd::Resources::Pixbufs
-
-bool FrontEnd::isRunning = false;
 
 static Glib::RefPtr<Gtk::Application> pApplication;
 
