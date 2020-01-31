@@ -4,13 +4,13 @@
 #include <ctime>
 #include <iostream>
 
-std::stringstream logStringStream; // Non-static!
+std::stringstream lastMarkupStringStream; // Non-static!
 
 const Glib::ustring Logger::get_last_markup_and_reset()
 {
-    auto str = logStringStream.str();
-    logStringStream.str("");
-    logStringStream.clear();
+    auto str = lastMarkupStringStream.str();
+    lastMarkupStringStream.str("");
+    lastMarkupStringStream.clear();
     return str;
 }
 
@@ -25,22 +25,15 @@ const Glib::ustring Logger::get_current_time()
 
 void Logger::print_raw(Glib::ustring &&markup, bool endl)
 {
-    // You probably ask yourself why I made that weird and complicated.
-    // Well, the answer is that you can't print to the console before it was created.
-    // Therefore I must save all the markup to be printed before the console had been created,
-    // and print it in one shot right after it is done.
-
     std::cout << markup;
-    logStringStream << markup;
+    lastMarkupStringStream << markup;
     if (endl)
     {
         std::cout << std::endl;
-        logStringStream << std::endl;
+        lastMarkupStringStream << std::endl;
     }
 
-    // This if is important!
-    // Remove it if you want segfaults :)
-    // (append() should be called only after the frontend has begun running)
+    // append() should be called only after FrontEnd had begun running
     if (FrontEnd::isRunning)
     {
         FrontEnd::Pages::CLI::append();

@@ -6,9 +6,6 @@ int main()
 {
     GroundStation::initialize();
     GroundStation::run();
-
-    // Shouldn't call GroundStation::quit(),
-    // since the program quits only when the user desires it.
 }
 
 void GroundStation::initialize()
