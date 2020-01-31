@@ -15,6 +15,10 @@ SRC                = \
 	src/GroundStation.cpp \
 	src/Logger.cpp \
 	src/BackEnd.cpp \
+	src/BackEnd/ServerSocket.cpp \
+	src/BackEnd/ClientSocket.cpp \
+	src/BackEnd/Server.cpp \
+	src/BackEnd/Client.cpp \
 	src/FrontEnd.cpp \
 	src/FrontEnd/Window.cpp \
 	src/FrontEnd/Pages/CLI.cpp \

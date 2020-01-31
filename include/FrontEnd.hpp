@@ -9,7 +9,7 @@ namespace FrontEnd
 
 namespace Resources::Paths
 {
-extern const std::string
+extern const Glib::ustring
     CSSProvider,
     iconGroundStation,
     iconConsole,
@@ -29,6 +29,7 @@ extern Glib::RefPtr<Gdk::Pixbuf>
 } // namespace Resources::Pixbufs
 
 extern bool isRunning;
+
 void initialize();
 void run();
 void quit();

@@ -1,6 +1,5 @@
 #include <FrontEnd/Pages/Settings.hpp>
 #include <FrontEnd.hpp>
-
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 

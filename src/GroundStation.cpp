@@ -1,20 +1,18 @@
 #include <GroundStation.hpp>
-#include <Logger.hpp>
-#include <BackEnd.hpp>
 #include <FrontEnd.hpp>
+#include <BackEnd.hpp>
 
 int main()
 {
     GroundStation::initialize();
     GroundStation::run();
 
-    // No need to call GroundStation::quit(),
+    // Shouldn't call GroundStation::quit(),
     // since the program quits only when the user desires it.
 }
 
 void GroundStation::initialize()
 {
-    Logger::initialize();
     BackEnd::initialize();
     FrontEnd::initialize();
 }
@@ -27,7 +25,6 @@ void GroundStation::run()
 
 void GroundStation::quit()
 {
-    FrontEnd::quit();
     BackEnd::quit();
-    Logger::quit();
+    FrontEnd::quit();
 }

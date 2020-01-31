@@ -1,42 +1,17 @@
 #include <Logger.hpp>
-
 #include <FrontEnd.hpp>
 #include <FrontEnd/Pages/CLI.hpp>
-
 #include <ctime>
-#include <cstdlib>
-#include <fstream>
-#include <sstream>
+#include <iostream>
 
-std::stringstream logStringStream;
-std::ofstream logFileStream;
+std::stringstream logStringStream; // Non-static!
 
-void Logger::initialize()
+const Glib::ustring Logger::get_last_markup_and_reset()
 {
-    // Get the current time and date (long)
-    auto now = std::chrono::system_clock::now();
-    auto time = std::chrono::system_clock::to_time_t(now);
-
-    std::string timeStr{ctime(&time)};
-    timeStr.pop_back();
-
-    // Create logs folder if doesn't already exist
-    system("mkdir -p logs");
-
-    // Create a log file
-    logFileStream.open("logs/" + timeStr);
-
-    verbose("Logger has been initialized!");
-}
-
-void Logger::quit()
-{
-    logFileStream.close();
-}
-
-const Glib::ustring Logger::get_last_markup()
-{
-    return logStringStream.str();
+    auto str = logStringStream.str();
+    logStringStream.str("");
+    logStringStream.clear();
+    return str;
 }
 
 const Glib::ustring Logger::get_current_time()
@@ -50,23 +25,25 @@ const Glib::ustring Logger::get_current_time()
 
 void Logger::print_raw(Glib::ustring &&markup, bool endl)
 {
-    if (endl)
-    {
-        markup += "\n";
-    }
-
-    logFileStream << markup;
-
     // You probably ask yourself why I made that weird and complicated.
     // Well, the answer is that you can't print to the console before it was created.
     // Therefore I must save all the markup to be printed before the console had been created,
     // and print it in one shot right after it is done.
 
+    std::cout << markup;
     logStringStream << markup;
+    if (endl)
+    {
+        std::cout << std::endl;
+        logStringStream << std::endl;
+    }
 
+    // This if is important!
+    // Remove it if you want segfaults :)
+    // (append() should be called only after the frontend has begun running)
     if (FrontEnd::isRunning)
     {
-        FrontEnd::Pages::CLI::append(markup);
+        FrontEnd::Pages::CLI::append();
     }
 }
 

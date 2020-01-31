@@ -7,7 +7,7 @@ namespace FrontEnd::Pages
 struct CLI
 {
     static void load(Gtk::Notebook *pNotebook);
-    static void append(const Glib::ustring &text);
+    static void append();
 };
 
 } // namespace FrontEnd

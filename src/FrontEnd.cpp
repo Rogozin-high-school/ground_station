@@ -1,13 +1,12 @@
 #include <FrontEnd.hpp>
 #include <FrontEnd/Window.hpp>
-
 #include <gtkmm/application.h>
 #include <gtkmm/cssprovider.h>
 
 namespace FrontEnd::Resources::Paths
 {
 
-const std::string
+const Glib::ustring
     CSSProvider = "res/style.css",
     iconGroundStation = "res/ground_station.png",
     iconConsole = "res/console.png",
@@ -23,7 +22,7 @@ Glib::RefPtr<Gdk::Pixbuf>
     pIconConsole,
     pIconGears;
 
-void load()
+static void load()
 {
     pIconGroundStation = Gdk::Pixbuf::create_from_file(Paths::iconGroundStation);
     pIconConsole = Gdk::Pixbuf::create_from_file(Paths::iconConsole);
@@ -34,9 +33,9 @@ void load()
 
 bool FrontEnd::isRunning = false;
 
-Glib::RefPtr<Gtk::Application> pApplication;
+static Glib::RefPtr<Gtk::Application> pApplication;
 
-void load_CSS();
+static void load_CSS();
 
 void FrontEnd::initialize()
 {
@@ -63,7 +62,7 @@ void FrontEnd::quit()
     pApplication->quit();
 }
 
-inline void load_CSS()
+void load_CSS()
 {
     auto pScreen = Gdk::Screen::get_default();
     auto pCSSProvider = Gtk::CssProvider::create();

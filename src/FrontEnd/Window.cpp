@@ -2,18 +2,16 @@
 #include <FrontEnd/Window.hpp>
 #include <FrontEnd/Pages/CLI.hpp>
 #include <FrontEnd/Pages/Settings.hpp>
-
 #include <Logger.hpp>
-
 #include <gtkmm/box.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 
-Gtk::Box *pLayout;
+static Gtk::Box *pLayout;
 
-void build_layout(FrontEnd::Window *pWindow);
-void build_title_bar();
-void build_notebook();
+static void build_layout(FrontEnd::Window *pWindow);
+static void build_title_bar();
+static void build_notebook();
 
 FrontEnd::Window::Window()
 {
@@ -27,7 +25,7 @@ FrontEnd::Window::Window()
     show_all();
 }
 
-inline void build_layout(FrontEnd::Window *pWindow)
+void build_layout(FrontEnd::Window *pWindow)
 {
     pLayout = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
     build_title_bar();
@@ -35,7 +33,7 @@ inline void build_layout(FrontEnd::Window *pWindow)
     pWindow->add(*pLayout);
 }
 
-inline void build_title_bar()
+void build_title_bar()
 {
     auto pTitleBar = Gtk::manage(new Gtk::Box);
     auto pTitleBarInner = Gtk::manage(new Gtk::Box);
@@ -53,7 +51,7 @@ inline void build_title_bar()
     pLayout->pack_start(*pTitleBar, Gtk::PACK_SHRINK);
 }
 
-inline void build_notebook()
+void build_notebook()
 {
     auto pNotebook = Gtk::manage(new Gtk::Notebook);
     pNotebook->set_tab_pos(Gtk::POS_LEFT);
