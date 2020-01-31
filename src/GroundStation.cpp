@@ -22,9 +22,3 @@ void GroundStation::run()
     BackEnd::run();
     FrontEnd::run();
 }
-
-void GroundStation::quit()
-{
-    BackEnd::quit();
-    FrontEnd::quit();
-}
