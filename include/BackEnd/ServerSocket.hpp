@@ -4,6 +4,7 @@
 
 namespace BackEnd
 {
+
 struct ServerSocket
 {
     const int port;
@@ -17,4 +18,5 @@ struct ServerSocket
     ClientSocket server_accept() const;
     void server_close() const;
 };
+
 } // namespace BackEnd

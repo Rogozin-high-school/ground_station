@@ -3,9 +3,12 @@
 #include <gtkmm/application.h>
 #include <gtkmm/cssprovider.h>
 
-bool FrontEnd::isRunning = false;
+namespace FrontEnd
+{
 
-namespace FrontEnd::Resources::Paths
+bool isRunning = false;
+
+namespace Resources::Paths
 {
 
 const Glib::ustring
@@ -16,7 +19,7 @@ const Glib::ustring
 
 } // namespace Resources::Paths
 
-namespace FrontEnd::Resources::Pixbufs
+namespace Resources::Pixbufs
 {
 // Link these resources that were declared in <FrontEnd.hpp>
 Glib::RefPtr<Gdk::Pixbuf>
@@ -31,13 +34,13 @@ static void load()
     pIconGears = Gdk::Pixbuf::create_from_file(Paths::iconGears);
 }
 
-} // namespace FrontEnd::Resources::Pixbufs
+} // namespace Resources::Pixbufs
 
 static Glib::RefPtr<Gtk::Application> pApplication;
 
 static void load_CSS();
 
-void FrontEnd::initialize()
+void initialize()
 {
     pApplication = Gtk::Application::create();
 
@@ -46,7 +49,7 @@ void FrontEnd::initialize()
     load_CSS();
 }
 
-void FrontEnd::run()
+void run()
 {
     Window window;
     isRunning = true;
@@ -57,7 +60,7 @@ void FrontEnd::run()
     pApplication->run(window);
 }
 
-void FrontEnd::quit()
+void quit()
 {
     pApplication->quit();
 }
@@ -67,5 +70,7 @@ void load_CSS()
     auto pScreen = Gdk::Screen::get_default();
     auto pCSSProvider = Gtk::CssProvider::create();
     Gtk::StyleContext::add_provider_for_screen(pScreen, pCSSProvider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    pCSSProvider->load_from_path(FrontEnd::Resources::Paths::CSSProvider);
+    pCSSProvider->load_from_path(Resources::Paths::CSSProvider);
 }
+
+} // namespace FrontEnd

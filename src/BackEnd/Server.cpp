@@ -1,26 +1,31 @@
 #include <BackEnd/Server.hpp>
 #include <BackEnd/ServerSocket.hpp>
+#include <BackEnd/Clients/Satellite.hpp>
+#include <BackEnd/Clients/Phone.hpp>
+#include <BackEnd/Clients/Compass.hpp>
+#include <BackEnd/Clients/PowerSupplies.hpp>
 #include <Logger.hpp>
-#include <vector>
 #include <thread>
-#include <algorithm>
+
+namespace BackEnd
+{
 
 static constexpr int maxClients = 1;
 static constexpr int port = 8888;
 
 static bool isOpen = false;
-static BackEnd::ServerSocket serverSocket(port);
-static std::vector<BackEnd::Client> clients;
+static ServerSocket serverSocket(port);
 
 static void host();
+static void create_client(const ClientSocket &clientSocket);
 
-void BackEnd::Server::initialize()
+void Server::initialize()
 {
     Logger::verbose("Server is ready!");
     isOpen = true;
 }
 
-void BackEnd::Server::run()
+void Server::run()
 {
     serverSocket.server_open_socket();
     serverSocket.server_bind();
@@ -29,25 +34,20 @@ void BackEnd::Server::run()
     thread.detach();
 }
 
-void BackEnd::Server::quit()
+void Server::quit()
 {
     isOpen = false;
-    for (const Client &client : clients)
-    {
-        close_connection_with(client);
-    }
+    Clients::satellite.die();
+    Clients::phone.die();
+    Clients::compass.die();
+    Clients::powerSupplies.die();
     serverSocket.server_close();
     Logger::verbose("Server is dead!");
 }
 
-bool BackEnd::Server::is_open()
+bool Server::is_open()
 {
     return isOpen;
-}
-
-void BackEnd::Server::close_connection_with(const Client &client)
-{
-    clients.erase(std::remove(clients.begin(), clients.end(), client));
 }
 
 void host()
@@ -55,9 +55,10 @@ void host()
     Logger::info("Server is running on port " + std::to_string(port) + "!");
     while (true)
     {
-        try 
+        try
         {
-            clients.push_back(serverSocket.server_accept());
+            std::thread thread(create_client, serverSocket.server_accept());
+            thread.detach();
         }
         catch (const std::exception &ex)
         {
@@ -70,3 +71,43 @@ void host()
         }
     }
 }
+
+void create_client(const ClientSocket &clientSocket)
+{
+    Logger::verbose("Handshake from " + clientSocket.ip + ":" + std::to_string(clientSocket.port));
+
+    constexpr int timeoutMicros = 500000;
+    clientSocket.client_set_timeout(timeoutMicros);
+
+    uint8_t buffer[sizeof(ClientType)];
+    if (Server::is_open() && clientSocket.client_recv(buffer, sizeof(buffer)) <= 0)
+    {
+        Logger::verbose("Didn't receive any response from " + clientSocket.ip + ":" +
+                        std::to_string(clientSocket.port) + " in " + std::to_string(timeoutMicros) + "μs!");
+        clientSocket.client_close();
+        return;
+    }
+
+    switch (*buffer)
+    {
+        // run() doesn't open a new thread!
+    case uint8_t(ClientType::Satellite):
+        Clients::satellite.run(clientSocket);
+        Clients::satellite.die();
+        return;
+    case uint8_t(ClientType::Phone):
+        Clients::phone.run(clientSocket);
+        Clients::phone.die();
+        return;
+    case uint8_t(ClientType::Compass):
+        Clients::compass.run(clientSocket);
+        Clients::compass.die();
+        return;
+    case uint8_t(ClientType::PowerSupplies):
+        Clients::powerSupplies.run(clientSocket);
+        Clients::powerSupplies.die();
+        return;
+    }
+}
+
+} // namespace BackEnd

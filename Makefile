@@ -18,7 +18,10 @@ SRC                = \
 	src/BackEnd/ServerSocket.cpp \
 	src/BackEnd/ClientSocket.cpp \
 	src/BackEnd/Server.cpp \
-	src/BackEnd/Client.cpp \
+	src/BackEnd/Clients/Satellite.cpp \
+	src/BackEnd/Clients/Phone.cpp \
+	src/BackEnd/Clients/Compass.cpp \
+	src/BackEnd/Clients/PowerSupplies.cpp \
 	src/FrontEnd.cpp \
 	src/FrontEnd/Window.cpp \
 	src/FrontEnd/Pages/CLI.cpp \

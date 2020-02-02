@@ -7,13 +7,16 @@
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 
+namespace FrontEnd
+{
+
 static Gtk::Box *pLayout;
 
-static void build_layout(FrontEnd::Window *pWindow);
+static void build_layout(Window *pWindow);
 static void build_title_bar();
 static void build_notebook();
 
-FrontEnd::Window::Window()
+Window::Window()
 {
     set_default_icon(Resources::Pixbufs::pIconGroundStation);
     {
@@ -25,7 +28,7 @@ FrontEnd::Window::Window()
     show_all();
 }
 
-void build_layout(FrontEnd::Window *pWindow)
+void build_layout(Window *pWindow)
 {
     pLayout = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
     build_title_bar();
@@ -38,7 +41,7 @@ void build_title_bar()
     auto pTitleBar = Gtk::manage(new Gtk::Box);
     auto pTitleBarInner = Gtk::manage(new Gtk::Box);
 
-    auto pIconPixbuf = SCALE(FrontEnd::Resources::Pixbufs::pIconGroundStation, 96);
+    auto pIconPixbuf = SCALE(Resources::Pixbufs::pIconGroundStation, 96);
     auto pIcon = Gtk::manage(new Gtk::Image(pIconPixbuf));
     auto pLabel = Gtk::manage(new Gtk::Label("Rogozin's Ground Station"));
 
@@ -56,8 +59,10 @@ void build_notebook()
     auto pNotebook = Gtk::manage(new Gtk::Notebook);
     pNotebook->set_tab_pos(Gtk::POS_LEFT);
 
-    FrontEnd::Pages::CLI::load(pNotebook);
-    FrontEnd::Pages::Settings::load(pNotebook);
+    Pages::CLI::load(pNotebook);
+    Pages::Settings::load(pNotebook);
 
     pLayout->pack_start(*pNotebook);
 }
+
+} // namespace FrontEnd

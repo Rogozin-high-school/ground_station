@@ -4,9 +4,11 @@
 
 namespace BackEnd
 {
+
 struct ClientSocket
 {
     const Glib::ustring ip;
+    const int port;
 
     ClientSocket(SocketFd socketFd, SocketAddress socketAddress);
 
@@ -17,4 +19,5 @@ struct ClientSocket
     SocketFd get_socket_fd() const;
     const SocketAddress &get_socket_address() const;
 };
+
 } // namespace BackEnd

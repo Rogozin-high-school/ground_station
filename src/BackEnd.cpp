@@ -1,19 +1,23 @@
-#include <BackEnd.hpp>
 #include <BackEnd/Server.hpp>
 
-bool BackEnd::isConnected = false;
+namespace BackEnd
+{
 
-void BackEnd::initialize()
+bool isConnected = false;
+
+void initialize()
 {
     Server::initialize();
 }
 
-void BackEnd::run()
+void run()
 {
     Server::run();
 }
 
-void BackEnd::quit()
+void quit()
 {
     Server::quit();
 }
+
+} // namespace BackEnd

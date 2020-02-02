@@ -2,24 +2,28 @@
 #include <Logger.hpp>
 #include <unistd.h>
 
-static BackEnd::SocketFd socketFd; 
-static BackEnd::SocketAddress socketAddress;
+namespace BackEnd
+{
 
-static Glib::ustring load_ip(const BackEnd::SocketAddress &socketAddress);
+static SocketFd socketFd;
+static SocketAddress socketAddress;
 
-BackEnd::ClientSocket::ClientSocket(SocketFd _socketFd, SocketAddress _socketAddress)
-    : ip(load_ip(_socketAddress))
+static Glib::ustring load_ip(const SocketAddress &socketAddress);
+static int load_port(const SocketAddress &socketAddress);
+
+ClientSocket::ClientSocket(SocketFd _socketFd, SocketAddress _socketAddress)
+    : ip(load_ip(_socketAddress)), port(load_port(_socketAddress))
 {
     socketFd = _socketFd;
     socketAddress = _socketAddress;
 }
 
-ssize_t BackEnd::ClientSocket::client_recv(uint8_t *buffer, size_t size) const
+ssize_t ClientSocket::client_recv(uint8_t *buffer, size_t size) const
 {
     return recv(socketFd, buffer, size, 0);
 }
 
-void BackEnd::ClientSocket::client_set_timeout(suseconds_t timeoutMicros) const
+void ClientSocket::client_set_timeout(suseconds_t timeoutMicros) const
 {
     timeval timeout = {timeoutMicros / 1000000, timeoutMicros % 1000000};
     if (setsockopt(socketFd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeval)) == -1)
@@ -28,7 +32,7 @@ void BackEnd::ClientSocket::client_set_timeout(suseconds_t timeoutMicros) const
     }
 }
 
-void BackEnd::ClientSocket::client_close() const
+void ClientSocket::client_close() const
 {
     if (socketFd != -1)
     {
@@ -37,19 +41,26 @@ void BackEnd::ClientSocket::client_close() const
     }
 }
 
-BackEnd::SocketFd BackEnd::ClientSocket::get_socket_fd() const
+SocketFd ClientSocket::get_socket_fd() const
 {
     return socketFd;
 }
 
-const BackEnd::SocketAddress &BackEnd::ClientSocket::get_socket_address() const
+const SocketAddress &ClientSocket::get_socket_address() const
 {
     return socketAddress;
 }
 
-Glib::ustring load_ip(const BackEnd::SocketAddress &socketAddress)
+Glib::ustring load_ip(const SocketAddress &socketAddress)
 {
     char buffer[16];
     inet_ntop(AF_INET, &socketAddress.sin_addr, buffer, sizeof(buffer));
     return buffer;
 }
+
+int load_port(const SocketAddress &socketAddress)
+{
+    return htons(socketAddress.sin_port);
+}
+
+} // namespace BackEnd
