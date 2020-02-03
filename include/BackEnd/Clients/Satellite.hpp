@@ -6,12 +6,9 @@ namespace BackEnd::Clients
 
 struct Satellite
 {
-    static const bool &isConnected;
-    
     static void run(const ClientSocket &clientSocket);
     static void die();
+    static bool is_connected();
 };
-
-extern Satellite satellite;
 
 } // namespace BackEnd::Clients

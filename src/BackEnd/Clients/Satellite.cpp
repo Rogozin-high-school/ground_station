@@ -7,10 +7,6 @@ namespace BackEnd::Clients
 static bool connected = false;
 static const ClientSocket *pClientSocket = nullptr;
 
-const bool &Satellite::isConnected = connected;
-    
-Satellite satellite;
-
 void Satellite::run(const ClientSocket &clientSocket)
 {
     if (connected)
@@ -35,6 +31,11 @@ void Satellite::die()
     connected = false;
     pClientSocket->client_close();
     Logger::info("Satellite has disconnected!");
+}
+
+bool Satellite::is_connected()
+{
+    return connected;
 }
 
 } // namespace BackEnd::Clients

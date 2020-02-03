@@ -7,10 +7,6 @@ namespace BackEnd::Clients
 static bool connected = false;
 static const ClientSocket *pClientSocket = nullptr;
 
-const bool &Compass::isConnected = connected;
-
-Compass compass;
-
 void Compass::run(const ClientSocket &clientSocket)
 {
     if (connected)
@@ -35,6 +31,11 @@ void Compass::die()
     connected = false;
     pClientSocket->client_close();
     Logger::info("Compass has disconnected!");
+}
+
+bool Compass::is_connected()
+{
+    return connected;
 }
 
 } // namespace BackEnd::Clients

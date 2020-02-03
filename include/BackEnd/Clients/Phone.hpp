@@ -6,12 +6,9 @@ namespace BackEnd::Clients
 
 struct Phone
 {
-    static const bool &isConnected;
-    
     static void run(const ClientSocket &clientSocket);
     static void die();
+    static bool is_connected();
 };
-
-extern Phone phone;
 
 } // namespace BackEnd::Clients

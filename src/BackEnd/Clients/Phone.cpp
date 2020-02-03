@@ -7,10 +7,6 @@ namespace BackEnd::Clients
 static bool connected = false;
 static const ClientSocket *pClientSocket = nullptr;
 
-const bool &Phone::isConnected = connected;
-    
-Phone phone;
-
 void Phone::run(const ClientSocket &clientSocket)
 {
     if (connected)
@@ -35,6 +31,11 @@ void Phone::die()
     connected = false;
     pClientSocket->client_close();
     Logger::info("Phone has disconnected!");
+}
+
+bool Phone::is_connected()
+{
+    return connected;
 }
 
 } // namespace BackEnd::Clients

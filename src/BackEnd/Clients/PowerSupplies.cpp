@@ -7,10 +7,6 @@ namespace BackEnd::Clients
 static bool connected = false;
 static const ClientSocket *pClientSocket = nullptr;
 
-const bool &PowerSupplies::isConnected = connected;
-
-PowerSupplies powerSupplies;
-
 void PowerSupplies::run(const ClientSocket &clientSocket)
 {
     if (connected)
@@ -35,6 +31,11 @@ void PowerSupplies::die()
     connected = false;
     pClientSocket->client_close();
     Logger::info("PowerSupplies has disconnected!");
+}
+
+bool PowerSupplies::is_connected()
+{
+    return connected;
 }
 
 } // namespace BackEnd::Clients

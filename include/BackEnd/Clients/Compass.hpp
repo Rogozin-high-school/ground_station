@@ -6,12 +6,9 @@ namespace BackEnd::Clients
 
 struct Compass
 {
-    static const bool &isConnected;
-    
     static void run(const ClientSocket &clientSocket);
     static void die();
+    static bool is_connected();
 };
-
-extern Compass compass;
 
 } // namespace BackEnd::Clients

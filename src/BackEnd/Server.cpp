@@ -37,10 +37,10 @@ void Server::run()
 void Server::quit()
 {
     isOpen = false;
-    Clients::satellite.die();
-    Clients::phone.die();
-    Clients::compass.die();
-    Clients::powerSupplies.die();
+    Clients::Satellite::die();
+    Clients::Phone::die();
+    Clients::Compass::die();
+    Clients::PowerSupplies::die();
     serverSocket.server_close();
     Logger::verbose("Server is dead!");
 }
@@ -92,20 +92,20 @@ void create_client(const ClientSocket &clientSocket)
     {
         // run() doesn't open a new thread!
     case uint8_t(ClientType::Satellite):
-        Clients::satellite.run(clientSocket);
-        Clients::satellite.die();
+        Clients::Satellite::run(clientSocket);
+        Clients::Satellite::die();
         return;
     case uint8_t(ClientType::Phone):
-        Clients::phone.run(clientSocket);
-        Clients::phone.die();
+        Clients::Phone::run(clientSocket);
+        Clients::Phone::die();
         return;
     case uint8_t(ClientType::Compass):
-        Clients::compass.run(clientSocket);
-        Clients::compass.die();
+        Clients::Compass::run(clientSocket);
+        Clients::Compass::die();
         return;
     case uint8_t(ClientType::PowerSupplies):
-        Clients::powerSupplies.run(clientSocket);
-        Clients::powerSupplies.die();
+        Clients::PowerSupplies::run(clientSocket);
+        Clients::PowerSupplies::die();
         return;
     }
 }
