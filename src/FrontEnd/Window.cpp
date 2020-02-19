@@ -61,7 +61,7 @@ void build_notebook()
     pNotebook->set_tab_pos(Gtk::POS_LEFT);
 
     Pages::CLI::load();
-    // Pages::Settings::load();
+    Pages::Settings::load();
 
     pLayout->pack_start(*pNotebook);
 }
