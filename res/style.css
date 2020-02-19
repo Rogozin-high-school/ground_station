@@ -23,10 +23,10 @@
 }
 
 #page_cli textview {
-    font: 24px "Ubuntu Mono";
+    font: 18px "Ubuntu Mono";
 }
 
 #page_cli entry {
-    font: bold 36px "Ubuntu Mono";
+    font: 24px "Ubuntu Mono";
     background: #202020;
 }

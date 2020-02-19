@@ -19,6 +19,8 @@ protected:
     void on_activate() override;
 };
 
+static Gtk::Box *pPage;
+static Gtk::Widget *pIcon;
 static Entry *pEntry;
 static Gtk::ScrolledWindow *pTextView_scrolledWindow;
 static Gtk::TextView *pTextView;
@@ -27,13 +29,14 @@ static void load_page(Gtk::Box *pPage);
 static void process_command(const Glib::ustring &command);
 static void insert_markup();
 
-void CLI::load(Gtk::Notebook *pNotebook)
+void CLI::load()
 {
-    auto pPage = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
-    auto pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconConsole, 96)));
+    pPage = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
+    pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconConsole, 96)));
     pNotebook->append_page(*pPage, *pIcon);
     load_page(pPage);
     append();
+    pNotebook->show_all();
 }
 
 void CLI::append()

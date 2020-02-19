@@ -1,4 +1,5 @@
 #include <BackEnd/Clients/Satellite.hpp>
+#include <FrontEnd/Pages/Satellite.hpp>
 #include <Logger.hpp>
 
 namespace BackEnd::Clients
@@ -16,6 +17,7 @@ void Satellite::run(const ClientSocket &clientSocket)
     
     connected = true;
     pClientSocket = &clientSocket;
+    g_idle_add((GSourceFunc)FrontEnd::Pages::Satellite::load, nullptr);
     Logger::info("Satellite has connected!");
     uint8_t buffer[1]; // dummy
     clientSocket.client_recv(buffer, 1);
@@ -30,6 +32,7 @@ void Satellite::die()
 
     connected = false;
     pClientSocket->client_close();
+    g_idle_add((GSourceFunc)FrontEnd::Pages::Satellite::unload, nullptr);
     Logger::info("Satellite has disconnected!");
 }
 

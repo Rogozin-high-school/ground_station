@@ -6,7 +6,8 @@
 namespace FrontEnd
 {
 
-bool isRunning = false;
+Gtk::Notebook *pNotebook;
+bool isRunning;
 
 namespace Resources::Paths
 {
@@ -15,6 +16,7 @@ const Glib::ustring
     CSSProvider = "res/style.css",
     iconGroundStation = "res/ground_station.png",
     iconConsole = "res/console.png",
+    iconSatellite = "res/satellite.png",
     iconGears = "res/gears.png";
 
 } // namespace Resources::Paths
@@ -25,12 +27,14 @@ namespace Resources::Pixbufs
 Glib::RefPtr<Gdk::Pixbuf>
     pIconGroundStation,
     pIconConsole,
+    pIconSatellite,
     pIconGears;
 
 static void load()
 {
     pIconGroundStation = Gdk::Pixbuf::create_from_file(Paths::iconGroundStation);
     pIconConsole = Gdk::Pixbuf::create_from_file(Paths::iconConsole);
+    pIconSatellite = Gdk::Pixbuf::create_from_file(Paths::iconSatellite);
     pIconGears = Gdk::Pixbuf::create_from_file(Paths::iconGears);
 }
 

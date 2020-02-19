@@ -3,6 +3,8 @@
 #include <string>
 #include <gdkmm/pixbuf.h>
 #include <gtkmm/image.h>
+#include <gtkmm/notebook.h>
+#include <gtkmm/box.h>
 
 namespace FrontEnd
 {
@@ -13,7 +15,8 @@ extern const Glib::ustring
     CSSProvider,
     iconGroundStation,
     iconConsole,
-    iconGears; 
+    iconSatellite,
+    iconGears;
 } // namespace Resources::Paths
 
 namespace Resources::Pixbufs
@@ -22,12 +25,14 @@ namespace Resources::Pixbufs
 extern Glib::RefPtr<Gdk::Pixbuf>
     pIconGroundStation,
     pIconConsole,
+    pIconSatellite,
     pIconGears;
 
 #define SCALE(pixbuf, size) pixbuf->scale_simple(size, size, Gdk::INTERP_BILINEAR)
 
 } // namespace Resources::Pixbufs
 
+extern Gtk::Notebook *pNotebook;
 extern bool isRunning;
 
 void initialize();

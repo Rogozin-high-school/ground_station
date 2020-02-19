@@ -1,6 +1,7 @@
 #include <FrontEnd.hpp>
 #include <FrontEnd/Window.hpp>
 #include <FrontEnd/Pages/CLI.hpp>
+#include <FrontEnd/Pages/Satellite.hpp>
 #include <FrontEnd/Pages/Settings.hpp>
 #include <Logger.hpp>
 #include <gtkmm/box.h>
@@ -56,11 +57,11 @@ void build_title_bar()
 
 void build_notebook()
 {
-    auto pNotebook = Gtk::manage(new Gtk::Notebook);
+    pNotebook = Gtk::manage(new Gtk::Notebook);
     pNotebook->set_tab_pos(Gtk::POS_LEFT);
 
-    Pages::CLI::load(pNotebook);
-    Pages::Settings::load(pNotebook);
+    Pages::CLI::load();
+    // Pages::Settings::load();
 
     pLayout->pack_start(*pNotebook);
 }

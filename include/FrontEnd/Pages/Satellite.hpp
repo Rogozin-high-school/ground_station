@@ -3,9 +3,10 @@
 namespace FrontEnd::Pages
 {
 
-struct Settings
+struct Satellite
 {
     static void load();
+    static void unload();
 };
 
 } // namespace FrontEnd

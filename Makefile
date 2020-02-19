@@ -25,7 +25,8 @@ SRC                = \
 	src/FrontEnd.cpp \
 	src/FrontEnd/Window.cpp \
 	src/FrontEnd/Pages/CLI.cpp \
-	src/FrontEnd/Pages/Settings.cpp
+	src/FrontEnd/Pages/Settings.cpp \
+	src/FrontEnd/Pages/Satellite.cpp
 OBJS               = $(SRC:.cpp=.o)
 
 build: $(OBJS)

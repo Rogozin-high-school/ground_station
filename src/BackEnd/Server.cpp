@@ -88,6 +88,8 @@ void create_client(const ClientSocket &clientSocket)
         return;
     }
 
+    clientSocket.client_set_timeout(0);
+
     switch (*buffer)
     {
         // run() doesn't open a new thread!

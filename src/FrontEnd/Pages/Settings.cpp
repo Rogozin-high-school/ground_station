@@ -6,11 +6,15 @@
 namespace FrontEnd::Pages
 {
 
-void Settings::load(Gtk::Notebook *pNotebook)
+static Gtk::Widget *pPage;
+static Gtk::Widget *pIcon;
+
+void Settings::load()
 {
-    auto pPage = Gtk::manage(new Gtk::Box);
-    auto pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconGears, 96)));
+    pPage = Gtk::manage(new Gtk::Box);
+    pIcon = Gtk::manage(new Gtk::Image(SCALE(Resources::Pixbufs::pIconGears, 96)));
     pNotebook->append_page(*pPage, *pIcon);
+    pNotebook->show_all();
 }
 
 } // namespace FrontEnd::Pages
